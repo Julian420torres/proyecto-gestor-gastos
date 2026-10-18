@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { Btnsave, v } from "../../index";
+import { Btnsave, v, useAuthStore, AuthContextProvider } from "../../index";
 export function LoginTemplate() {
+  const { signInWithGoogle } = useAuthStore();
   return (
     <Container imgfondo={v.imagenfondo}>
       <div className="contentCard">
@@ -15,6 +16,7 @@ export function LoginTemplate() {
             titulo="Iniciar con google"
             icono={<v.iconogoogle />}
             bgcolor={v.colorSecundario}
+            funcion={signInWithGoogle}
           />
         </ContainerBtn>
       </div>
