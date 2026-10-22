@@ -7,12 +7,14 @@ import {
   AuthContextProvider,
   Menuambur,
 } from "./index";
+import { useLocation } from "react-router-dom";
 import { createContext, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { styled } from "styled-components";
 export const ThemeContext = createContext(null);
 function App() {
+  const { pathname } = useLocation();
   const [theme, setTheme] = useState("light");
   const themeStyle = theme === "light" ? Light : Dark;
   const [sidebarOpen, setSiderbarOpen] = useState(true);
@@ -22,18 +24,22 @@ function App() {
       <ThemeContext.Provider value={{ setTheme, theme }}>
         <ThemeProvider theme={themeStyle}>
           <AuthContextProvider>
-            <Container className={sidebarOpen ? "active" : ""}>
-              <div className="ContentSidebar">
-                <Sidebar state={sidebarOpen} setState={setSiderbarOpen} />
-              </div>
-              <div className="ContentMenuAmbur">
-                <Menuambur />
-              </div>
-              <Containerbody>
-                <MyRoutes />
-              </Containerbody>
-            </Container>
-            <ReactQueryDevtools initialIsOpen={true} />
+            {pathname !== "/login" ? (
+              <Container className={sidebarOpen ? "active" : ""}>
+                <div className="ContentSidebar">
+                  <Sidebar state={sidebarOpen} setState={setSiderbarOpen} />
+                </div>
+                <div className="ContentMenuAmbur">
+                  <Menuambur />
+                </div>
+                <Containerbody>
+                  <MyRoutes />
+                </Containerbody>
+              </Container>
+            ) : (
+              <MyRoutes />
+            )}
+            <ReactQueryDevtools initialIsOpen={false} />
           </AuthContextProvider>
         </ThemeProvider>
       </ThemeContext.Provider>
@@ -49,7 +55,7 @@ const Container = styled.div`
   .ContentSidebar {
     display: none;
   }
-  .ContentMenuambur {
+  .ContentMenuAmbur {
     display: block;
     position: absolute;
     left: 20px;
@@ -58,14 +64,11 @@ const Container = styled.div`
     grid-template-columns: 65px 1fr;
     &.active {
       grid-template-columns: 220px 1fr;
-      &.active {
-        grid-template-columns: 220px 1fr;
-      }
     }
     .ContentSidebar {
       display: initial;
     }
-    .ContentMenuambur {
+    .ContentMenuAmbur {
       display: none;
     }
   }
