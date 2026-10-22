@@ -17,7 +17,7 @@ export function Sidebar({ state, setState }) {
           <div className="imgcontent">
             <img src={v.logo} />
           </div>
-          <h2>Control de gastos</h2>
+          <h2>CONTROL</h2>
         </div>
         {LinksArray.map(({ icon, label, to }) => (
           <div
