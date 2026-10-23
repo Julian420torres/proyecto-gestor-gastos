@@ -6,10 +6,10 @@ import {
   ListaMenuDesplegable,
   DesplegableUser,
 } from "../../index";
-export function DataUser() {
+export function DataUser({ stateConfig }) {
   const { user } = UserAuth();
   return (
-    <Container>
+    <Container onClick={stateConfig.setState}>
       <div className="imgContainer">
         <img src={user.picture} alt={user.name} />
       </div>
@@ -25,7 +25,9 @@ export function DataUser() {
         translateY="-12px"
       />
       <span className="nombre">{user.name}</span>
-      <ListaMenuDesplegable data={DesplegableUser} top="62px" />
+      {stateConfig.state && (
+        <ListaMenuDesplegable data={DesplegableUser} top="62px" />
+      )}
     </Container>
   );
 }
